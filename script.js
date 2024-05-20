@@ -3,15 +3,13 @@ const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 const searchInputTwo = document.getElementById('searchInput2');
 const cards = document.getElementById('card-present');
+const searchterm = document.getElementById('searchterm')
+
 let savedData = {};
 
 async function foodAPI(query){
 
 const q = query;
-
-
-
-
 
 
 const url = `https://tasty.p.rapidapi.com/recipes/list?from=5&size=3&q=${q}`;
@@ -28,19 +26,32 @@ try {
 	const result = await response.json();
   console.log(result)
 	localStorage.setItem('data', JSON.stringify(result));
+  
 
   displayInCard(result);
+  
 } catch (error) {
   console.error(error);
 }
 }
 
 
-// searchBtn.addEventListener('click', function() {
-//   const query = searchInput.value; // Get query from search input
-//   foodAPI(query); 
-//   console.log("clicked");
+
+
+searchBtn.addEventListener('click', function() {
+  const query = searchInput.value; // Get query from search input
+  localStorage.setItem('searchfood', searchInput.value)
+  foodAPI(query); 
+  console.log("clicked");
   
+});
+
+
+
+// searchBtn.addEventListener('click', function() {
+//   loaddata(); 
+//   console.log("clicked");
+//   displayInCard(savedData);
 // });
 
 
@@ -51,14 +62,13 @@ function loaddata() {
   console.log(savedData);
 }
 
-searchBtn.addEventListener('click', function() {
-  loaddata(); 
-  console.log("clicked");
-  
-  displayInCard(savedData);
-});
+
+
+
 
 function displayInCard(savedData) {
+
+  searchterm.innerHTML = "search for" + " " + localStorage.getItem('searchfood');
 
   console.log(savedData.results[0]);
   cards.innerHTML ="";
@@ -67,7 +77,7 @@ function displayInCard(savedData) {
     // Create card element
     var newCard = document.createElement('div');
     newCard.className = 'card col container ';
-    newCard.style.height = '300px'; 
+ 
    
     
 
@@ -76,11 +86,9 @@ function displayInCard(savedData) {
     newImg.className = 'card-img-top';
     newImg.id = savedData.results[i].id;
 
-    if(savedData.results[i].thumbnail_url === null || savedData.results[i].thumbnail_url === "null"){
-        newImg.src = "./img/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-    } else {
-        newImg.setAttribute('src', savedData.results[i].thumbnail_url);
-    }
+   
+    newImg.setAttribute('src', savedData.results[i].thumbnail_url);
+
 
     newImg.setAttribute('alt', savedData.results[i].keywords);
     newCard.appendChild(newImg); 
@@ -98,7 +106,7 @@ function displayInCard(savedData) {
 
     // Create card description element
     var cardDescription = document.createElement('p');
-    cardDescription.className = 'card-text text-start text-truncate';
+    cardDescription.className = 'card-text text-start';
     cardDescription.innerHTML = savedData.results[i].description;
     cardBody.appendChild(cardDescription); 
 
