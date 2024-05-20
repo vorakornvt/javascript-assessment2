@@ -38,21 +38,21 @@ try {
 
 
 
-searchBtn.addEventListener('click', function() {
-  const query = searchInput.value; // Get query from search input
-  localStorage.setItem('searchfood', searchInput.value)
-  foodAPI(query); 
-  console.log("clicked");
-  
-});
-
-
-
 // searchBtn.addEventListener('click', function() {
-//   loaddata(); 
+//   const query = searchInput.value; // Get query from search input
+//   localStorage.setItem('searchfood', searchInput.value)
+//   foodAPI(query); 
 //   console.log("clicked");
-//   displayInCard(savedData);
+  
 // });
+
+
+
+searchBtn.addEventListener('click', function() {
+  loaddata(); 
+  console.log("clicked");
+  displayInCard(savedData);
+});
 
 
 
@@ -64,65 +64,130 @@ function loaddata() {
 
 
 
-
-
 function displayInCard(savedData) {
-
-  searchterm.innerHTML = "search for" + " " + localStorage.getItem('searchfood');
+  searchterm.innerHTML = "search for " + localStorage.getItem('searchfood');
 
   console.log(savedData.results[0]);
-  cards.innerHTML ="";
+  cards.innerHTML = "";
 
   for (let i = 0; i < savedData.results.length; i++) {
-    // Create card element
-    var newCard = document.createElement('div');
-    newCard.className = 'card col container ';
+      // Create row element
+      var newRow = document.createElement('div');
+      newRow.className = 'row mb-3'; // Add margin-bottom for spacing between rows
+
+      // Create card element
+      var newCard = document.createElement('div');
+      newCard.className = 'card col-5 '; // Full width card within the row
+
+      // Create image element
+      var newImg = document.createElement('img');
+      newImg.className = 'card-img-top';
+      newImg.id = savedData.results[i].id;
+      newImg.setAttribute('src', savedData.results[i].thumbnail_url);
+      newImg.setAttribute('alt', savedData.results[i].keywords);
+      newCard.appendChild(newImg);
+
+      // Create card body element
+      var cardBody = document.createElement('div');
+      cardBody.className = 'card-body';
+
+      // Create card title element
+      var cardName = document.createElement('h5');
+      cardName.className = 'card-title border-bottom';
+      cardName.innerHTML = savedData.results[i].name;
+      cardBody.appendChild(cardName);
+
+      // Create tutorial link element
+      var cardLink = document.createElement('a');
+      cardLink.className = 'btn btn-primary';
+      cardLink.innerHTML = "Tutorial";
+      cardLink.setAttribute("href", savedData.results[i].original_video_url);
+      cardBody.appendChild(cardLink);
+
+      newCard.appendChild(cardBody);
+      newRow.appendChild(newCard); // Append the card to the row
+      cards.appendChild(newRow); // Append the row to the container
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function displayInCard(savedData) {
+
+//   searchterm.innerHTML = "search for" + " " + localStorage.getItem('searchfood');
+
+//   console.log(savedData.results[0]);
+//   cards.innerHTML ="";
+
+  
+//   for (let i = 0; i < savedData.results.length; i++) {
+//     // Create card element
+//     var newCard = document.createElement('div');
+//     newCard.className = 'card col-4 rows container ';
  
    
     
 
-    // Create image element
-    var newImg = document.createElement('img'); 
-    newImg.className = 'card-img-top';
-    newImg.id = savedData.results[i].id;
+//     // Create image element
+//     var newImg = document.createElement('img'); 
+//     newImg.className = 'card-img-top';
+//     newImg.id = savedData.results[i].id;
 
    
-    newImg.setAttribute('src', savedData.results[i].thumbnail_url);
+//     newImg.setAttribute('src', savedData.results[i].thumbnail_url);
 
 
-    newImg.setAttribute('alt', savedData.results[i].keywords);
-    newCard.appendChild(newImg); 
+//     newImg.setAttribute('alt', savedData.results[i].keywords);
+//     newCard.appendChild(newImg); 
 
-    // Create card body element
-    var cardBody = document.createElement('div');
-    cardBody.className = 'card-body row-1';
+//     // Create card body element
+//     var cardBody = document.createElement('div');
+//     cardBody.className = 'card-body row-1';
   
 
-    // Create card title element
-    var cardName = document.createElement('h5');
-    cardName.className = 'card-title border-bottom';
-    cardName.innerHTML = savedData.results[i].name;
-    cardBody.appendChild(cardName); 
+//     // Create card title element
+//     var cardName = document.createElement('h5');
+//     cardName.className = 'card-title border-bottom';
+//     cardName.innerHTML = savedData.results[i].name;
+//     cardBody.appendChild(cardName); 
 
-    // Create card description element
-    var cardDescription = document.createElement('p');
-    cardDescription.className = 'card-text text-start';
-    cardDescription.innerHTML = savedData.results[i].description;
-    cardBody.appendChild(cardDescription); 
+  
 
-    // Create tutorial link element
-    var cardLink = document.createElement('a');
-    cardLink.className = 'btn btn-primary';
-    cardLink.innerHTML = "Tutorial";
-    cardLink.setAttribute("href", savedData.results[i].original_video_url);
-    cardBody.appendChild(cardLink); 
+//     // Create tutorial link element
+//     var cardLink = document.createElement('a');
+//     cardLink.className = 'btn btn-primary';
+//     cardLink.innerHTML = "Tutorial";
+//     cardLink.setAttribute("href", savedData.results[i].original_video_url);
+//     cardBody.appendChild(cardLink); 
 
-    newCard.appendChild(cardBody); 
-    cards.appendChild(newCard); 
-}
+//     newCard.appendChild(cardBody); 
+//     cards.appendChild(newCard); 
+// }
 
 
-    }
+//     }
    
 
 
