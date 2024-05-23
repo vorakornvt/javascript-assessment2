@@ -12,7 +12,7 @@ async function foodAPI(query){
 const q = query;
 
 
-const url = `https://tasty.p.rapidapi.com/recipes/list?from=5&size=3&q=${q}`;
+const url = `https://tasty.p.rapidapi.com/recipes/list?from=5&size=10&q=${q}`;
     const options = {
         method: 'GET',
         headers: {
@@ -38,21 +38,21 @@ try {
 
 
 
-// searchBtn.addEventListener('click', function() {
-//   const query = searchInput.value; // Get query from search input
-//   localStorage.setItem('searchfood', searchInput.value)
-//   foodAPI(query); 
-//   console.log("clicked");
-  
-// });
-
-
-
 searchBtn.addEventListener('click', function() {
-  loaddata(); 
+  const query = searchInput.value; // Get query from search input
+  localStorage.setItem('searchfood', searchInput.value)
+  foodAPI(query); 
   console.log("clicked");
-  displayInCard(savedData);
+  
 });
+
+
+
+// searchBtn.addEventListener('click', function() {
+//   loaddata(); 
+//   console.log("clicked");
+//   displayInCard(savedData);
+// });
 
 
 
@@ -65,7 +65,7 @@ function loaddata() {
 
 
 function displayInCard(savedData) {
-  searchterm.innerHTML = "search for " + localStorage.getItem('searchfood');
+  searchterm.innerHTML = "<p4>search for </p4>" + "<h4><strong>" + localStorage.getItem('searchfood') + "</strong></h4>";
 
   console.log(savedData.results[0]);
   cards.innerHTML = "";
