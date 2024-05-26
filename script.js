@@ -1,29 +1,18 @@
 
-    // 2 document for variable
-    // 2 document for function
-
-
-// @type {object}
-// @type {number}
-// @type {string}
-// @type {boolean}
-
-// quote = store a reference to ...
-
-
-
-//local storage 
-// 
-
-//new twchnologies
-//chart.js
-//bootrap icon
-
-
+/** 
+ *searchBtn stores a reference to the HTML element with the ID 'searchBtn'.
+ *@type{object}
+ */
 const searchBtn = document.getElementById('searchBtn');
 const searchInput = document.getElementById('searchInput');
 const cards = document.getElementById('card-present');
 const searchterm = document.getElementById('searchterm');
+/** 
+*chartType  stores a reference to the HTML element with the ID 'chartType'.
+*@type{object}
+ */
+
+
 const chartType = document.getElementById('chartType');
 
 let savedData = {};
@@ -49,22 +38,13 @@ async function foodAPI(query) {
     }
 }
 
-// searchBtn.addEventListener('click', function() {
-//     const query = searchInput.value;
-//     if (query === '') {
-//         validation.innerHTML = "<p4>Please fill the Ingredient</p4>" 
-//         validation.className ="alert alert-warning"
-//         searchInput.className = "border border-warning form-control text-center"
-//     } else {
-//         localStorage.setItem('searchfood', query);
-//         foodAPI(query);
-//         validation.innerHTML = '';
-//         validation.className = '';
-//         searchInput.className = 'form-control text-center';
-//     }
-// });
-
-
+/**
+ * Adds a click event listener to the `searchBtn` element. When the button is clicked,
+ * the function retrieves the value from the `searchInput` element and checks if it is empty.
+ * If the input is empty, it displays a warning message. If the input is not empty,
+ * it stores the query in local storage, calls the `foodAPI` function with the query,
+ * and resets any validation messages and styles.
+ */
 searchBtn.addEventListener('click', function() {
     const query = searchInput.value;
     if (query === '') {
@@ -72,13 +52,29 @@ searchBtn.addEventListener('click', function() {
         validation.className ="alert alert-warning"
         searchInput.className = "border border-warning form-control text-center"
     } else {
-        loaddata(); 
-        displayInCard(savedData);
+        localStorage.setItem('searchfood', query);
+        foodAPI(query);
         validation.innerHTML = '';
         validation.className = '';
         searchInput.className = 'form-control text-center';
     }
 });
+
+
+// searchBtn.addEventListener('click', function() {
+//     const query = searchInput.value;
+//     if (query === '') {
+//         validation.innerHTML = "<p4>Please fill the Ingredient</p4>" 
+//         validation.className ="alert alert-warning"
+//         searchInput.className = "border border-warning form-control text-center"
+//     } else {
+//         loaddata(); 
+//         displayInCard(savedData);
+//         validation.innerHTML = '';
+//         validation.className = '';
+//         searchInput.className = 'form-control text-center';
+//     }
+// });
 
 
 function loaddata() {
@@ -87,6 +83,29 @@ function loaddata() {
     console.log(savedData);
 }
 
+
+/**
+ * The `displayInCard` function displays search results in card on the webpage.
+ * It updates the searchterm element to show the current search term and creates a set of cards
+ * to display each result for 10 cards. Each card includes an image, name, description, tutorial link, a heart icon
+ * button, and a nutrition chart.
+ *
+ * @param {Object} savedData - The data object containing search results.
+ * @param {Array} savedData.results - An array of result objects.
+ * @param {string} savedData.results[].id - id for each menu.
+ * @param {string} savedData.results[].thumbnail_url - The URL of the thumbnail image.
+ * @param {string} savedData.results[].keywords - The keywords associated with the result.
+ * @param {string} savedData.results[].name - The name of the result.
+ * @param {string} savedData.results[].description - The description of the result.
+ * @param {string} savedData.results[].original_video_url - The URL of the tutorial video.
+ * @param {Object} savedData.results[].nutrition - The nutrition information object.
+ * @param {number} savedData.results[].nutrition.calories - The number of calories.
+ * @param {number} savedData.results[].nutrition.carbohydrates - The amount of carbohydrates.
+ * @param {number} savedData.results[].nutrition.fat - The amount of fat.
+ * @param {number} savedData.results[].nutrition.fiber - The amount of fiber.
+ * @param {number} savedData.results[].nutrition.protein - The amount of protein.
+ * @param {number} savedData.results[].nutrition.sugar - The amount of sugar.
+ */
 
 function displayInCard(savedData) {
     searchterm.innerHTML = "<p4>results for </p4>" + "<h4><strong>" + localStorage.getItem('searchfood') + "</strong></h4>";
