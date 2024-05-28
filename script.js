@@ -145,20 +145,21 @@ function displayInCard(savedData) {
         cardDescription.innerHTML = savedData.results[i].description;
         cardBody.appendChild(cardDescription);
 
+
         var cardLink = document.createElement('a');
         cardLink.className = 'btn btn-primary';
         cardLink.innerHTML = "Tutorial";
-        cardLink.setAttribute('href', savedData.results[i].original_video_url);
+        cardLink.setAttribute('href', `tutorial.html?id=${savedData.results[i].id}`);
         cardBody.appendChild(cardLink);
 
-        // Create button container for heart icon
+    
         var heartBox  = document.createElement('button');
         heartBox.className = "btn btn-secondary";
         heartBox.style.width = "60px";
         heartBox.id = `heartbox${i}`
         cardBody.appendChild(heartBox);
 
-        // Create heart icon
+      
         var heartIcon = document.createElement('i');
         heartIcon.className = 'bi bi-heart-fill mx-auto';
         heartIcon.style.cursor = 'pointer';

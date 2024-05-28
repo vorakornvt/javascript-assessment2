@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial</title>
+</head>
+<body>
+    <div id="tutorial-content" class="card"></div>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tutorial</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div id="tutorial-content" class="card"></div>
+    
+        <script>
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+    
+            const recipeId = getQueryParam('id');
+    
+            function loadTutorialData(recipeId) {
+                const data = JSON.parse(localStorage.getItem('data'));
+                const recipe = data.results.find(r => r.id == recipeId);
+                const contentTutorial = document.getElementById('tutorial-content');
+    
+                if (recipe) {
+                    var newRow = document.createElement('div');
+                    newRow.className = 'row'; 
+                    contentTutorial.appendChild(newRow);
+    
+                    var newCard = document.createElement('div');
+                    newCard.className = 'card col-8 mx-auto';
+                    newRow.appendChild(newCard);
+    
+                    var cardBody = document.createElement('div');
+                    cardBody.className = 'card-body';
+                    newCard.appendChild(cardBody);
+    
+                    var titleFood = document.createElement('h1');
+                    titleFood.className = 'card-title';
+                    titleFood.innerHTML = recipe.name;
+                    cardBody.appendChild(titleFood);
+
+                    var instructionsHeader = document.createElement('h5');
+                    instructionsHeader.innerHTML = 'Instructions';
+                    cardBody.appendChild(instructionsHeader);
+
+                    for (let i = 0; i < recipe.instructions.length; i++) {
+                    var instruction = recipe.instructions[i];
+                    var instructionsFood = document.createElement('li');
+                    instructionsFood.className = 'card-text border-bottom';
+                    instructionsFood.innerHTML = instruction.display_text;
+                    cardBody.appendChild(instructionsFood);
+                }
+    
+                    var videoFood = document.createElement('video');
+                    videoFood.setAttribute('src', recipe.original_video_url);
+                    videoFood.setAttribute('controls', 'controls');
+                    videoFood.className = 'card-img-top';
+                    cardBody.appendChild(videoFood);
+                } else {
+                    document.getElementById('tutorial-content').innerHTML = '<p>Recipe not found.</p>';
+                }
+            }
+    
+            loadTutorialData(recipeId);
+        </script>
+</body>
+</html>
+
+
+
+
+
+
